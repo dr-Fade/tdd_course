@@ -21,3 +21,7 @@ bool isLeapYear(int year) {
 TEST(LeapYear, is4aLeapYear) {
     ASSERT_EQ(true, isLeapYear(4));
 }
+
+TEST(LeapYear, is8aLeapYear) {
+    ASSERT_EQ(true, isLeapYear(8));
+}
