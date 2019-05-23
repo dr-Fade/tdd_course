@@ -14,6 +14,10 @@ If your language provides a method in the standard library that does this look-u
 
 #include <gtest/gtest.h>
 
+bool isLeapYear(int year) {
+    return year == 4;
+}
+
 TEST(LeapYear, is4aLeapYear) {
     ASSERT_EQ(true, isLeapYear(4));
 }
