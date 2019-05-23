@@ -18,42 +18,42 @@ bool isLeapYear(int year) {
     return !(year % 4) && (year % 100 || !(year % 400));
 }
 
-TEST(LeapYear, is4aLeapYear) {
+TEST(LeapYear, is4aLeapYearTrue) {
     ASSERT_EQ(true, isLeapYear(4));
 }
 
-TEST(LeapYear, is8aLeapYear) {
+TEST(LeapYear, is8aLeapYearTrue) {
     ASSERT_EQ(true, isLeapYear(8));
 }
 
-TEST(LeapYear, is9aLeapYear) {
+TEST(LeapYear, is9aLeapYearFalse) {
     ASSERT_EQ(false, isLeapYear(9));
 }
 
-TEST(LeapYear, is12aLeapYear) {
+TEST(LeapYear, is12aLeapYearTrue) {
     ASSERT_EQ(true, isLeapYear(12));
 }
 
-TEST(LeapYear, is100aLeapYear) {
+TEST(LeapYear, is100aLeapYearFalse) {
     ASSERT_EQ(false, isLeapYear(100));
 }
 
-TEST(LeapYear, is400aLeapYear) {
+TEST(LeapYear, is400aLeapYearTrue) {
     ASSERT_EQ(true, isLeapYear(400));
 }
 
-TEST(LeapYear, is1996aLeapYear) {
+TEST(LeapYear, is1996aLeapYearTrue) {
     ASSERT_EQ(true, isLeapYear(1996));
 }
 
-TEST(LeapYear, is1997aLeapYear) {
+TEST(LeapYear, is1997aLeapYearFalse) {
     ASSERT_EQ(false, isLeapYear(1997));
 }
 
-TEST(LeapYear, is1900aLeapYear) {
+TEST(LeapYear, is1900aLeapYearFalse) {
     ASSERT_EQ(false, isLeapYear(1900));
 }
 
-TEST(LeapYear, is2000aLeapYear) {
+TEST(LeapYear, is2000aLeapYearTrue) {
     ASSERT_EQ(true, isLeapYear(2000));
 }
