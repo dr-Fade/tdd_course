@@ -41,3 +41,7 @@ TEST(LeapYear, is100aLeapYear) {
 TEST(LeapYear, is400aLeapYear) {
     ASSERT_EQ(true, isLeapYear(400));
 }
+
+TEST(LeapYear, is1996aLeapYear) {
+    ASSERT_EQ(true, isLeapYear(1996));
+}
