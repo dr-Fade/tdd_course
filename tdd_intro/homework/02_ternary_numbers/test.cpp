@@ -43,3 +43,7 @@ TEST(TernaryNumbers, is120aTernaryNumberReturnsTrue) {
 TEST(TernaryNumbers, is012aTernaryNumberReturnsFalse) {
     ASSERT_FALSE(isTernary("012"));
 }
+
+TEST(TernaryNumbers, isEmptyStringaTernaryNumberReturnsFalse) {
+    ASSERT_FALSE(isTernary(""));
+}
