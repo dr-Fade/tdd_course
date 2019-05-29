@@ -25,6 +25,7 @@ bool isTernary(const std::string& number) {
 }
 
 int fromTernaryToDecimal(const std::string& number) {
+    if(!isTernary(number)) return 0;
     return 3;
 }
 
