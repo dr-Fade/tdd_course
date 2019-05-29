@@ -60,3 +60,7 @@ TEST(TernaryNumbers, convert10FromTernaryIs3InDecimal) {
 TEST(TernaryNumbers, notValidumberIs0) {
     ASSERT_EQ(0, fromTernaryToDecimal("asdasd123"));
 }
+
+TEST(TernaryNumbers, convert110FromTernaryIs12InDecimal) {
+    ASSERT_EQ(12, fromTernaryToDecimal("110"));
+}
