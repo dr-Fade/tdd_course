@@ -31,4 +31,6 @@ TEST(TernaryNumbers, is10aTernaryNumberReturnsTrue) {
     ASSERT_TRUE(isTernary("10"));
 }
 
-
+TEST(TernaryNumbers, is123aTernaryNumberReturnsFalse) {
+    ASSERT_FALSE(isTernary("123"));
+}
