@@ -24,6 +24,10 @@ bool isTernary(const std::string& number) {
             number.find_first_not_of("012") == std::string::npos;
 }
 
+int fromTernaryToDecimal(const std::string& number) {
+    return 0;
+}
+
 TEST(TernaryNumbers, is0aTernaryNumberReturnsTrue) {
     ASSERT_TRUE(isTernary("0"));
 }
@@ -46,4 +50,8 @@ TEST(TernaryNumbers, is012aTernaryNumberReturnsFalse) {
 
 TEST(TernaryNumbers, isEmptyStringaTernaryNumberReturnsFalse) {
     ASSERT_FALSE(isTernary(""));
+}
+
+TEST(TernaryNumbers, convert10FromTernaryIs3InDecimal) {
+    ASSERT_EQ(3, fromTernaryToDecimal("10"));
 }
