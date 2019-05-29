@@ -19,7 +19,8 @@ If your language provides a method in the standard library to perform the conver
 */
 
 bool isTernary(const std::string& number) {
-    return number == "0" || number == "10";
+    return number.find("0") != std::string::npos
+        || number.find("1") != std::string::npos;
 }
 
 TEST(TernaryNumbers, is0aTernaryNumberReturnsTrue) {
