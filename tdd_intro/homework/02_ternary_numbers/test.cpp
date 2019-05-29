@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include <string>
-
+#include <math.h>
 /*
 Convert a ternary number, represented as a string (e.g. '102012'), to its decimal equivalent using first principles.
 
@@ -24,9 +24,15 @@ bool isTernary(const std::string& number) {
             number.find_first_not_of("012") == std::string::npos;
 }
 
-int fromTernaryToDecimal(const std::string& number) {
+int fromTernaryToDecimal(std::string number) {
     if(!isTernary(number)) return 0;
-    return 3;
+    int degree = 0;
+    int result = 0;
+    while(number.size()) {
+        result += (number.back() - '0') * pow(3, degree++);
+        number.pop_back();
+    }
+    return result;
 }
 
 TEST(TernaryNumbers, is0aTernaryNumberReturnsTrue) {
