@@ -55,3 +55,7 @@ TEST(TernaryNumbers, isEmptyStringaTernaryNumberReturnsFalse) {
 TEST(TernaryNumbers, convert10FromTernaryIs3InDecimal) {
     ASSERT_EQ(3, fromTernaryToDecimal("10"));
 }
+
+TEST(TernaryNumbers, notValidumberIs0) {
+    ASSERT_EQ(0, fromTernaryToDecimal("asdasd123"));
+}
