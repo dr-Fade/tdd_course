@@ -25,3 +25,9 @@ bool isTernary(const std::string& number) {
 TEST(TernaryNumbers, is0aTernaryNumberReturnsTrue) {
     ASSERT_TRUE(isTernary("0"));
 }
+
+TEST(TernaryNumbers, is10aTernaryNumberReturnsTrue) {
+    ASSERT_TRUE(isTernary("10"));
+}
+
+
