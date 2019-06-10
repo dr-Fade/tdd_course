@@ -84,114 +84,30 @@ Example input and output
 => 123456789
 ```
 */
+
+/*
+ * ARCHITECTURE:
+ * There are going to be 3 functions:
+ * 1. the one that casts a single Digit o a valid integer symbol
+ * 2. the one that casts 3x27 input to a valid string of integers
+ * 3. the one that reads new entries and handles the output
+ */
+
+/* TEST PLAN:
+ * 1. Convert '1';
+ * 2. Convert '2';
+ * 3. Convert '3';
+ * 4. Convert '4';
+ * 5. Convert '000000000';
+ * 6. Convert '111111111';
+ * 7. Convert '222222222';
+ * 8. Convert '333333333';
+ * 9. Convert '123456789';
+ * 10. Convert '987654321';
+ * 11. Convert '123456789'
+ *             '987654321';
+ */
+
 #include <gtest/gtest.h>
+#include <digit.h>
 #include <string>
-
-const unsigned short g_digitLen = 3;
-const unsigned short g_linesInDigit = 3;
-struct Digit
-{
-    std::string lines[g_linesInDigit];
-};
-
-const unsigned short g_digitsOnDisplay = 9;
-struct Display
-{
-    std::string lines[g_linesInDigit];
-};
-
-const Digit s_digit0 = { " _ ",
-                         "| |",
-                         "|_|"
-                       };
-const Digit s_digit1 = { "   ",
-                         "  |",
-                         "  |"
-                       };
-const Digit s_digit2 = { " _ ",
-                         " _|",
-                         "|_ "
-                       };
-const Digit s_digit3 = { " _ ",
-                         " _|",
-                         " _|"
-                       };
-const Digit s_digit4 = { "   ",
-                         "|_|",
-                         "  |"
-                       };
-const Digit s_digit5 = { " _ ",
-                         "|_ ",
-                         " _|"
-                       };
-const Digit s_digit6 = { " _ ",
-                         "|_ ",
-                         "|_|"
-                       };
-const Digit s_digit7 = { " _ ",
-                         "  |",
-                         "  |"
-                       };
-const Digit s_digit8 = { " _ ",
-                         "|_|",
-                         "|_|"
-                       };
-const Digit s_digit9 = { " _ ",
-                         "|_|",
-                         " _|"
-                       };
-
-const Display s_displayAll0 = { " _  _  _  _  _  _  _  _  _ ",
-                                "| || || || || || || || || |",
-                                "|_||_||_||_||_||_||_||_||_|"
-};
-
-const Display s_displayAll1 = { "                           ",
-                                "  |  |  |  |  |  |  |  |  |",
-                                "  |  |  |  |  |  |  |  |  |"
-};
-
-const Display s_displayAll2 = {  " _  _  _  _  _  _  _  _  _ ",
-                                 " _| _| _| _| _| _| _| _| _|",
-                                 "|_ |_ |_ |_ |_ |_ |_ |_ |_ "
-};
-
-const Display s_displayAll3 = { " _  _  _  _  _  _  _  _  _ ",
-                                " _| _| _| _| _| _| _| _| _|",
-                                " _| _| _| _| _| _| _| _| _|"
-};
-
-const Display s_displayAll4 = { "                           ",
-                                "|_||_||_||_||_||_||_||_||_|",
-                                "  |  |  |  |  |  |  |  |  |"
-};
-
-const Display s_displayAll5 = { " _  _  _  _  _  _  _  _  _ ",
-                                "|_ |_ |_ |_ |_ |_ |_ |_ |_ ",
-                                " _| _| _| _| _| _| _| _| _|"
-};
-
-const Display s_displayAll6 = { " _  _  _  _  _  _  _  _  _ ",
-                                "|_ |_ |_ |_ |_ |_ |_ |_ |_ ",
-                                "|_||_||_||_||_||_||_||_||_|"
-};
-
-const Display s_displayAll7 = { " _  _  _  _  _  _  _  _  _ ",
-                                "  |  |  |  |  |  |  |  |  |",
-                                "  |  |  |  |  |  |  |  |  |"
-};
-
-const Display s_displayAll8 = { " _  _  _  _  _  _  _  _  _ ",
-                                "|_||_||_||_||_||_||_||_||_|",
-                                "|_||_||_||_||_||_||_||_||_|"
-};
-
-const Display s_displayAll9 = { " _  _  _  _  _  _  _  _  _ ",
-                                "|_||_||_||_||_||_||_||_||_|",
-                                " _| _| _| _| _| _| _| _| _|"
-};
-
-const Display s_display123456789 = { "    _  _     _  _  _  _  _ ",
-                                     "  | _| _||_||_ |_   ||_||_|",
-                                     "  ||_  _|  | _||_|  ||_| _|"
-};

@@ -7,3 +7,6 @@ CONFIG -= qt
 
 SOURCES += \
     test.cpp
+
+HEADERS += \
+    digit.h
