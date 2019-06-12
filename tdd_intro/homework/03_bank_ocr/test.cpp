@@ -111,14 +111,27 @@ Example input and output
 #include <digit.h>
 #include <string>
 
+bool compareDigits(const Digit& d1, const Digit& d2)
+{
+    for (int i = 0; i < g_linesInDigit; i++)
+        if(d1.lines[i] != d2.lines[i])
+            return false;
+    return true;
+}
+
 char mapSingleDigit(const Digit& digit)
 {
-    if (digit.lines == s_digit1.lines)
-        return '1';
-    else if(digit.lines == s_digit2.lines)
-        return '2';
-    else if(digit.lines == s_digit3.lines)
-        return '3';
+    if (compareDigits(digit, s_digit0)) return '0';
+    if (compareDigits(digit, s_digit1)) return '1';
+    if (compareDigits(digit, s_digit2)) return '2';
+    if (compareDigits(digit, s_digit3)) return '3';
+    if (compareDigits(digit, s_digit4)) return '4';
+    if (compareDigits(digit, s_digit5)) return '5';
+    if (compareDigits(digit, s_digit6)) return '6';
+    if (compareDigits(digit, s_digit7)) return '7';
+    if (compareDigits(digit, s_digit8)) return '8';
+    if (compareDigits(digit, s_digit9)) return '9';
+    return '~';
 }
 
 TEST(entryConverter, map1)
