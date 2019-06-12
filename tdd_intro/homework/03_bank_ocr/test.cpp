@@ -113,7 +113,8 @@ Example input and output
 
 char mapSingleDigit(const Digit& digit)
 {
-    return '0';
+    if (digit.lines == s_digit1.lines)
+        return '1';
 }
 
 TEST(entryConverter, map1)
