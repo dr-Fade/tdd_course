@@ -136,7 +136,12 @@ char mapSingleDigit(const Digit& digit)
 
 std::string mapEntry(const std::vector<Digit> &entry)
 {
-    return "";
+    std::string result;
+    for (Digit d : entry)
+    {
+        result.push_back(mapSingleDigit(d));
+    }
+    return result;
 }
 
 TEST(entryConverter, map1)
