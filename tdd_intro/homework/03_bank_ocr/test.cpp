@@ -165,3 +165,10 @@ TEST(entryConverter, mapAllZeroesEntry)
     for (int i = 0; i < g_digitsOnDisplay; i++) entry.insert(entry.end(), s_digit0);
     ASSERT_EQ("000000000", mapEntry(entry));
 }
+
+TEST(entryConverter, mapAllOnesEntry)
+{
+    std::vector<Digit> entry;
+    for (int i = 0; i < g_digitsOnDisplay; i++) entry.insert(entry.end(), s_digit1);
+    ASSERT_EQ("111111111", mapEntry(entry));
+}
