@@ -111,7 +111,7 @@ Example input and output
  * New tests needed:
  * 1. convert Display to Digit:
  *   a. 000000000 -> {000000000}
- *   b. 123456789 -> {123456789g}
+ *   b. 123456789 -> {123456789}
  */
 
 #include <gtest/gtest.h>
@@ -222,6 +222,23 @@ TEST(entryConverter, convert000000000DisplayToDigits)
     entry.push_back(s_digit0);
     entry.push_back(s_digit0);
     std::vector<Digit> result = displayToDigits(s_displayAll0);
+    for (int i = 0; i < entry.size(); i++)
+        ASSERT_TRUE(compareDigits(entry[i], result[i]));
+}
+
+TEST(entryConverter, convert123456789DisplayToDigits)
+{
+    std::vector<Digit> entry;
+    entry.push_back(s_digit1);
+    entry.push_back(s_digit2);
+    entry.push_back(s_digit3);
+    entry.push_back(s_digit4);
+    entry.push_back(s_digit5);
+    entry.push_back(s_digit6);
+    entry.push_back(s_digit7);
+    entry.push_back(s_digit8);
+    entry.push_back(s_digit9);
+    std::vector<Digit> result = displayToDigits(s_display123456789);
     for (int i = 0; i < entry.size(); i++)
         ASSERT_TRUE(compareDigits(entry[i], result[i]));
 }
