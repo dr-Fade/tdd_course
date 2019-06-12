@@ -115,6 +115,8 @@ char mapSingleDigit(const Digit& digit)
 {
     if (digit.lines == s_digit1.lines)
         return '1';
+    else if(digit.lines == s_digit2.lines)
+        return '2';
 }
 
 TEST(entryConverter, map1)
