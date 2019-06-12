@@ -88,7 +88,7 @@ Example input and output
 /*
  * ARCHITECTURE:
  * There are going to be 3 functions:
- * 1. the one that casts a single Digit o a valid integer symbol
+ * 1. the one that casts a single Digit to a valid integer symbol
  * 2. the one that casts 3x27 input to a valid string of integers
  * 3. the one that reads new entries and handles the output
  */
@@ -97,17 +97,26 @@ Example input and output
  * 1. Convert '1';
  * 2. Convert '2';
  * 3. Convert '3';
- * 4. Convert '4';
- * 5. Convert '000000000';
- * 6. Convert '111111111';
- * 7. Convert '222222222';
- * 8. Convert '333333333';
- * 9. Convert '123456789';
- * 10. Convert '987654321';
- * 11. Convert '123456789'
+ * 4. Convert '000000000';
+ * 5. Convert '111111111';
+ * 6. Convert '222222222';
+ * 7. Convert '333333333';
+ * 8. Convert '123456789';
+ * 9. Convert '987654321';
+ * 10. Convert '123456789'
  *             '987654321';
  */
 
 #include <gtest/gtest.h>
 #include <digit.h>
 #include <string>
+
+char mapSingleDigit(const Digit& digit)
+{
+    return '0';
+}
+
+TEST(entryConverter, map1)
+{
+    ASSERT_EQ('1', mapSingleDigit(s_digit1));
+}
