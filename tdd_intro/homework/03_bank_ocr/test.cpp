@@ -151,6 +151,11 @@ std::string mapEntry(const std::vector<Digit> &entry)
     return result;
 }
 
+std::vector<Digit> displayToDigits(const Display& display)
+{
+    return std::vector<Digit>(9);
+}
+
 TEST(entryConverter, map1)
 {
     ASSERT_EQ('1', mapSingleDigit(s_digit1));
@@ -193,4 +198,21 @@ TEST(entryConverter, mapAllDigitsEntry)
     entry.push_back(s_digit8);
     entry.push_back(s_digit9);
     ASSERT_EQ("123456789", mapEntry(entry));
+}
+
+TEST(entryConverter, convert000000000DisplayToDigits)
+{
+    std::vector<Digit> entry;
+    entry.push_back(s_digit0);
+    entry.push_back(s_digit0);
+    entry.push_back(s_digit0);
+    entry.push_back(s_digit0);
+    entry.push_back(s_digit0);
+    entry.push_back(s_digit0);
+    entry.push_back(s_digit0);
+    entry.push_back(s_digit0);
+    entry.push_back(s_digit0);
+    std::vector<Digit> result = displayToDigits(s_displayAll0);
+    for (int i = 0; i < entry.size(); i++)
+        ASSERT_TRUE(compareDigits(entry[i], result[i]));
 }
