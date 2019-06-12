@@ -153,7 +153,16 @@ std::string mapEntry(const std::vector<Digit> &entry)
 
 std::vector<Digit> displayToDigits(const Display& display)
 {
-    return std::vector<Digit>(9);
+    std::vector<Digit> result;
+    for (int i = 0; i < g_digitsOnDisplay * g_digitLen; i += g_digitLen)
+    {
+        Digit d = { display.lines[0].substr(i, g_digitLen),
+                    display.lines[1].substr(i, g_digitLen),
+                    display.lines[2].substr(i, g_digitLen)
+                  };
+        result.push_back(d);
+    }
+    return result;
 }
 
 TEST(entryConverter, map1)
