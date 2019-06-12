@@ -165,6 +165,11 @@ std::vector<Digit> displayToDigits(const Display& display)
     return result;
 }
 
+std::vector<std::string> mapEntries(const std::vector<Display>& multirowEntry)
+{
+    return std::vector<std::string>();
+}
+
 TEST(entryConverter, map1)
 {
     ASSERT_EQ('1', mapSingleDigit(s_digit1));
@@ -241,4 +246,11 @@ TEST(entryConverter, convert123456789DisplayToDigits)
     std::vector<Digit> result = displayToDigits(s_display123456789);
     for (int i = 0; i < entry.size(); i++)
         ASSERT_TRUE(compareDigits(entry[i], result[i]));
+}
+
+TEST(entryConverter, mapMultyRowEntry)
+{
+    std::vector<Display> multirowEntry = { s_display123456789, s_display987654321 };
+    std::vector<std::string> expected = {"123456789", "987654321"};
+    ASSERT_EQ(expected, mapEntries(multirowEntry));
 }
