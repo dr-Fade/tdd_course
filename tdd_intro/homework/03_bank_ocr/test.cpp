@@ -167,7 +167,12 @@ std::vector<Digit> displayToDigits(const Display& display)
 
 std::vector<std::string> mapEntries(const std::vector<Display>& multirowEntry)
 {
-    return std::vector<std::string>();
+    std::vector<std::string> result;
+    for (auto entry : multirowEntry)
+    {
+        result.push_back(mapEntry(displayToDigits(entry)));
+    }
+    return result;
 }
 
 TEST(entryConverter, map1)
