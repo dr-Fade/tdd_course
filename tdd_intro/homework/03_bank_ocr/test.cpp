@@ -121,3 +121,8 @@ TEST(entryConverter, map1)
 {
     ASSERT_EQ('1', mapSingleDigit(s_digit1));
 }
+
+TEST(entryConverter, map2)
+{
+    ASSERT_EQ('2', mapSingleDigit(s_digit2));
+}
