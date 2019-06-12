@@ -134,6 +134,11 @@ char mapSingleDigit(const Digit& digit)
     return '~';
 }
 
+std::string mapEntry(const std::vector<Digit> &entry)
+{
+    return "";
+}
+
 TEST(entryConverter, map1)
 {
     ASSERT_EQ('1', mapSingleDigit(s_digit1));
@@ -147,4 +152,11 @@ TEST(entryConverter, map2)
 TEST(entryConverter, map3)
 {
     ASSERT_EQ('3', mapSingleDigit(s_digit3));
+}
+
+TEST(entryConverter, mapAllZeroesEntry)
+{
+    std::vector<Digit> entry;
+    for (int i = 0; i < g_digitsOnDisplay; i++) entry.insert(entry.end(), s_digit0);
+    ASSERT_EQ("000000000", mapEntry(entry));
 }
