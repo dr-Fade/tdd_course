@@ -107,6 +107,13 @@ Example input and output
  *             '987654321';
  */
 
+/*
+ * New tests needed:
+ * 1. convert Display to Digit:
+ *   a. 000000000 -> {000000000}
+ *   b. 123456789 -> {123456789g}
+ */
+
 #include <gtest/gtest.h>
 #include <digit.h>
 #include <string>
