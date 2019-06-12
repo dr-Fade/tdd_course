@@ -172,3 +172,18 @@ TEST(entryConverter, mapAllOnesEntry)
     for (int i = 0; i < g_digitsOnDisplay; i++) entry.insert(entry.end(), s_digit1);
     ASSERT_EQ("111111111", mapEntry(entry));
 }
+
+TEST(entryConverter, mapAllDigitsEntry)
+{
+    std::vector<Digit> entry;
+    entry.push_back(s_digit1);
+    entry.push_back(s_digit2);
+    entry.push_back(s_digit3);
+    entry.push_back(s_digit4);
+    entry.push_back(s_digit5);
+    entry.push_back(s_digit6);
+    entry.push_back(s_digit7);
+    entry.push_back(s_digit8);
+    entry.push_back(s_digit9);
+    ASSERT_EQ("123456789", mapEntry(entry));
+}
