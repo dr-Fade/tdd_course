@@ -124,3 +124,11 @@ TEST(wordCount, countHelloWorld)
 
     ASSERT_EQ(result, wordCount(str));
 }
+
+TEST(wordCount, countHelloCommaWorld)
+{
+    std::string str = "hello, world";
+    std::map<std::string, int> result = {{"hello", 1}, {"world", 1}};
+
+    ASSERT_EQ(result, wordCount(str));
+}
