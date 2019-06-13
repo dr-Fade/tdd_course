@@ -39,7 +39,10 @@ such: 1
 
 std::vector<std::string> splitPhrase(const std::string& sentence)
 {
-    return std::vector<std::string>();
+    std::vector<std::string> result;
+    if(!sentence.empty())
+        result = {sentence};
+    return result;
 }
 
 TEST(wordCount, splitEmptyPhrase)
