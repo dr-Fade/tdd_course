@@ -37,3 +37,13 @@ such: 1
 #include <string>
 #include <map>
 
+std::vector<std::string> splitPhrase(const std::string& sentence)
+{
+    return {""};
+}
+
+TEST(wordCount, splitEmptyPhrase)
+{
+    ASSERT_TRUE(splitPhrase("").empty());
+}
+
