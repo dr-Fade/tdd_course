@@ -45,6 +45,7 @@ std::vector<std::string> splitPhrase(const std::string& sentence)
     std::string words = sentence;
 
     words.erase(std::remove(words.begin(), words.end(), ','), words.end());
+    words.erase(std::remove(words.begin(), words.end(), '.'), words.end());
 
     std::istringstream stream(words);
     std::string word;
