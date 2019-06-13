@@ -141,3 +141,10 @@ TEST(wordCount, countHelloCommaWorldPeriod)
     ASSERT_EQ(result, wordCount(str));
 }
 
+TEST(wordCount, countHelloWorldPeriodHelloWorldAgain)
+{
+    std::string str = "hello world. hello world again";
+    std::map<std::string, int> result = {{"hello", 2}, {"world", 2}, {"again", 1}};
+
+    ASSERT_EQ(result, wordCount(str));
+}
