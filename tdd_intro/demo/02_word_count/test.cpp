@@ -37,11 +37,16 @@ such: 1
 #include <string>
 #include <map>
 #include <sstream>
+#include <algorithm>
 
 std::vector<std::string> splitPhrase(const std::string& sentence)
 {
     std::vector<std::string> result;
-    std::istringstream stream(sentence);
+    std::string words = sentence;
+
+    words.erase(std::remove(words.begin(), words.end(), ','), words.end());
+
+    std::istringstream stream(words);
     std::string word;
 
     while(getline(stream, word, ' '))
