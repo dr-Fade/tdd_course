@@ -83,3 +83,11 @@ TEST(wordCount, splitHelloCommaWorld)
 
     ASSERT_EQ(result, splitPhrase(str));
 }
+
+TEST(wordCount, splitHelloCommaWorldPeriod)
+{
+    std::string str = "hello, world.";
+    std::vector<std::string> result = {"hello", "world"};
+
+    ASSERT_EQ(result, splitPhrase(str));
+}
