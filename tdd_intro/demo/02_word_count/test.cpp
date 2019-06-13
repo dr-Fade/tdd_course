@@ -60,7 +60,13 @@ std::vector<std::string> splitPhrase(const std::string& sentence)
 
 std::map<std::string, int> wordCount(const std::string& str)
 {
-    return std::map<std::string, int>();
+    auto tokenizedString = splitPhrase(str);
+    std::map<std::string, int> result;
+    for(auto word : tokenizedString)
+    {
+        result[word]++;
+    }
+    return result;
 }
 
 TEST(wordCount, splitEmptyPhrase)
