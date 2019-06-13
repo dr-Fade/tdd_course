@@ -58,3 +58,10 @@ TEST(wordCount, splitHello)
     ASSERT_EQ(result, splitPhrase(str));
 }
 
+TEST(wordCount, splitHelloWorld)
+{
+    std::string str = "hello world";
+    std::vector<std::string> result = {"hello", "world"};
+
+    ASSERT_EQ(result, splitPhrase(str));
+}
