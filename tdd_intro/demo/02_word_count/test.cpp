@@ -60,7 +60,7 @@ std::vector<std::string> splitPhrase(const std::string& sentence)
 
 std::map<std::string, int> wordCount(const std::string& str)
 {
-    return {{"", 0}};
+    return std::map<std::string, int>();
 }
 
 TEST(wordCount, splitEmptyPhrase)
