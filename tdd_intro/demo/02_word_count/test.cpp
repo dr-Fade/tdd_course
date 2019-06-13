@@ -36,12 +36,17 @@ such: 1
 #include <gtest/gtest.h>
 #include <string>
 #include <map>
+#include <sstream>
 
 std::vector<std::string> splitPhrase(const std::string& sentence)
 {
     std::vector<std::string> result;
-    if(!sentence.empty())
-        result = {sentence};
+    std::istringstream stream(sentence);
+    std::string word;
+
+    while(getline(stream, word, ' '))
+        result.push_back(word);
+
     return result;
 }
 
