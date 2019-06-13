@@ -62,10 +62,13 @@ std::map<std::string, int> wordCount(const std::string& str)
 {
     auto tokenizedString = splitPhrase(str);
     std::map<std::string, int> result;
-    for(auto word : tokenizedString)
-    {
-        result[word]++;
-    }
+    std::for_each(
+        tokenizedString.begin(),
+        tokenizedString.end(),
+        [&result](std::string word) {
+            result[word]++;
+        }
+    );
     return result;
 }
 
