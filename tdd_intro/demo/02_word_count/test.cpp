@@ -58,6 +58,11 @@ std::vector<std::string> splitPhrase(const std::string& sentence)
     return result;
 }
 
+std::map<std::string, int> wordCount(const std::string& str)
+{
+    return {{"", 0}};
+}
+
 TEST(wordCount, splitEmptyPhrase)
 {
     ASSERT_TRUE(splitPhrase("").empty());
@@ -93,4 +98,12 @@ TEST(wordCount, splitHelloCommaWorldPeriod)
     std::vector<std::string> result = {"hello", "world"};
 
     ASSERT_EQ(result, splitPhrase(str));
+}
+
+TEST(wordCount, countEmptyString)
+{
+    std::string str = "";
+    std::map<std::string, int> result;
+
+    ASSERT_EQ(result, wordCount(str));
 }
