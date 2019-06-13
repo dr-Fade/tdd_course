@@ -47,3 +47,11 @@ TEST(wordCount, splitEmptyPhrase)
     ASSERT_TRUE(splitPhrase("").empty());
 }
 
+TEST(wordCount, splitHello)
+{
+    std::string str = "hello";
+    std::vector<std::string> result = {str};
+
+    ASSERT_EQ(result, splitPhrase(str));
+}
+
