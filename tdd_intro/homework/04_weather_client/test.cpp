@@ -82,6 +82,17 @@ public:
     virtual std::string GetWeather(const std::string& request) = 0;
 };
 
+class WeatherServer : public IWeatherServer
+{
+public:
+    ~WeatherServer() { }
+    // Returns raw response with weather for the given day and time in request
+    std::string GetWeather(const std::string& request)
+    {
+        return "";
+    }
+};
+
 // Implement this interface
 class IWeatherClient
 {
@@ -93,3 +104,69 @@ public:
     virtual double GetAverageWindDirection(IWeatherServer& server, const std::string& date) = 0;
     virtual double GetMaximumWindSpeed(IWeatherServer& server, const std::string& date) = 0;
 };
+
+struct WeatherInfo
+{
+    int temperature;
+    int windDirection;
+    double windSpeed;
+};
+
+bool operator==(const WeatherInfo& lhs, const WeatherInfo& rhs)
+{
+    return lhs.temperature == rhs.temperature
+            && lhs.windDirection == rhs.windDirection
+            && lhs.windSpeed == rhs.windSpeed;
+}
+
+class WeatherClient : public IWeatherClient
+{
+public:
+    WeatherClient(IWeatherServer* weatherServer)
+        : m_weatherServer(weatherServer)
+    {}
+
+    virtual ~WeatherClient() { }
+
+    WeatherInfo ParseResponse(const std::string& response)
+    {
+        return {0,0,0};
+    }
+
+    double GetAverageTemperature(IWeatherServer& server, const std::string& date)
+    {
+
+    }
+
+    double GetMinimumTemperature(IWeatherServer& server, const std::string& date)
+    {
+
+    }
+
+    double GetMaximumTemperature(IWeatherServer& server, const std::string& date)
+    {
+
+    }
+
+    double GetAverageWindDirection(IWeatherServer& server, const std::string& date)
+    {
+
+    }
+
+    double GetMaximumWindSpeed(IWeatherServer& server, const std::string& date)
+    {
+
+    }
+
+private:
+    IWeatherServer* m_weatherServer;
+};
+
+//"20;181;5.1" -> ParseResponse -> {20, 181, 5.1}
+TEST(weatherClient, ParseResponse1)
+{
+    WeatherServer weatherServer;
+    WeatherClient weatherClient(&weatherServer);
+    WeatherInfo expectedInfo = {20, 181, 5.1};
+    ASSERT_EQ(expectedInfo, weatherClient.ParseResponse("20;181;5.1"));
+}
