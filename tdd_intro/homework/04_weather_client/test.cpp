@@ -68,7 +68,7 @@ IMPORTANT:
  * 11. "01.09.2018" -> GetMinimumTemperature -> 19
  * 12. "01.09.2018" -> GetMaximumTemperature -> 31
  * 13. "01.09.2018" -> GetAverageWindDirection -> 135.75
- * 14. "01.09.2018" -> GetMaximumWindSpeed -> 4
+ * 14. "01.09.2018" -> GetMaximumWindSpeed -> 4.2
  */
 
 #include <gtest/gtest.h>
@@ -380,4 +380,16 @@ TEST(weatherClient, GetAverageWindDirection2)
     std::string date = "01.09.2018";
 
     ASSERT_EQ(expectedInfo, weatherClient.GetAverageWindDirection(weatherServer, date));
+}
+
+//"01.09.2018" -> GetMaximumWindSpeed -> 4.2
+TEST(weatherClient, GetMaximumWindSpeed2)
+{
+    WeatherServer weatherServer;
+    WeatherClient weatherClient;
+
+    double expectedInfo = 4.2;
+    std::string date = "01.09.2018";
+
+    ASSERT_EQ(expectedInfo, weatherClient.GetMaximumWindSpeed(weatherServer, date));
 }
