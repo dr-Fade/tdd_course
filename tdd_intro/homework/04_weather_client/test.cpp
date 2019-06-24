@@ -171,7 +171,16 @@ public:
 
     double GetMinimumTemperature(IWeatherServer& server, const std::string& date)
     {
+        std::vector<WeatherInfo> weatherInfo;
+        GetWeatherInfoForDate(server, date, weatherInfo);
 
+        double result = weatherInfo.front().temperature;
+        for (int i = 1; i < 4; i++)
+        {
+            result = result < weatherInfo[i].temperature ? result : weatherInfo[i].temperature;
+        }
+
+        return result;
     }
 
     double GetMaximumTemperature(IWeatherServer& server, const std::string& date)
