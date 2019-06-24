@@ -130,7 +130,13 @@ public:
 
     WeatherInfo ParseResponse(const std::string& response)
     {
-        return {0,0,0};
+        std::string numbers = response;
+        std::replace(numbers.begin(), numbers.end(), ';', ' ');
+        std::istringstream iss(numbers);
+
+        WeatherInfo result;
+        iss >> result.temperature >> result.windDirection >> result.windSpeed;
+        return result;
     }
 
     double GetAverageTemperature(IWeatherServer& server, const std::string& date)
