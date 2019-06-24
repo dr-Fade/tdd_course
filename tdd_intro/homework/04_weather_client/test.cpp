@@ -157,7 +157,16 @@ public:
 
     double GetAverageTemperature(IWeatherServer& server, const std::string& date)
     {
+        double result = 0;
+        std::vector<WeatherInfo> weatherInfo;
+        GetWeatherInfoForDate(server, date, weatherInfo);
 
+        for (WeatherInfo& wi : weatherInfo)
+        {
+            result += wi.temperature;
+        }
+
+        return result / 4.;
     }
 
     double GetMinimumTemperature(IWeatherServer& server, const std::string& date)
