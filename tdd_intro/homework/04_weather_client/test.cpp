@@ -312,3 +312,15 @@ TEST(weatherClient, GetAverageWindDirection1)
 
     ASSERT_EQ(expectedInfo, weatherClient.GetAverageWindDirection(weatherServer, date));
 }
+
+//"31.08.2018" -> GetMaximumWindSpeed -> 5.1
+TEST(weatherClient, GetMaximumWindSpeed1)
+{
+    WeatherServer weatherServer;
+    WeatherClient weatherClient;
+
+    double expectedInfo = 5.1;
+    std::string date = "31.08.2018";
+
+    ASSERT_EQ(expectedInfo, weatherClient.GetMaximumWindSpeed(weatherServer, date));
+}
