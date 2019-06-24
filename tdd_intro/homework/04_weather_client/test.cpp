@@ -291,3 +291,15 @@ TEST(weatherClient, GetMaximumTemperature1)
 
     ASSERT_EQ(expectedInfo, weatherClient.GetMaximumTemperature(weatherServer, date));
 }
+
+//"31.08.2018" -> GetAverageWindDirection -> 189.25
+TEST(weatherClient, GetAverageWindDirection1)
+{
+    WeatherServer weatherServer;
+    WeatherClient weatherClient;
+
+    double expectedInfo = 189.25;
+    std::string date = "31.08.2018";
+
+    ASSERT_EQ(expectedInfo, weatherClient.GetAverageWindDirection(weatherServer, date));
+}
