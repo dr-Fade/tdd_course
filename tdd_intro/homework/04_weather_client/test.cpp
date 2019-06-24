@@ -228,3 +228,15 @@ TEST(weatherClient, GetWeatherInfoForDate2)
 
     ASSERT_EQ(actualInfo, expectedInfo);
 }
+
+//"31.08.2018" -> GetAverageTemperature -> 25.5
+TEST(weatherClient, GetAverageTemperature1)
+{
+    WeatherServer weatherServer;
+    WeatherClient weatherClient;
+
+    double expectedInfo = 25.5;
+    std::string date = "31.08.2018";
+
+    ASSERT_EQ(expectedInfo, weatherClient.GetAverageTemperature(weatherServer, date));
+}
