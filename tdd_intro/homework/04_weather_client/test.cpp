@@ -270,3 +270,15 @@ TEST(weatherClient, GetMinimumTemperature1)
 
     ASSERT_EQ(expectedInfo, weatherClient.GetMinimumTemperature(weatherServer, date));
 }
+
+//"31.08.2018" -> GetMaximumTemperature -> 33
+TEST(weatherClient, GetMaximumTemperature1)
+{
+    WeatherServer weatherServer;
+    WeatherClient weatherClient;
+
+    double expectedInfo = 33;
+    std::string date = "31.08.2018";
+
+    ASSERT_EQ(expectedInfo, weatherClient.GetMaximumTemperature(weatherServer, date));
+}
