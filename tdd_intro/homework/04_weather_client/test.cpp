@@ -44,6 +44,33 @@ IMPORTANT:
 2. Implement IWeatherClient using fake server.
 */
 
+/**
+ * Architecture:
+ * The WeatherClient has to be able to send valid requests to the server, parse and store received responses.
+ * So there has to be a struct (WeatherInfo) that contains parsed information and also the following functions:
+ *
+ * void GetWeatherInfoForDate(const std::string& date, std::vector<WeatherInfo>& weatherInfo)
+ * WeatherInfo ParseResponse(const std::string& response)
+ */
+
+/**
+ * Test plan:
+ * 1. "20;181;5.1" -> ParseResponse -> {20, 181, 5.1}
+ * 2. "23;204;4.9" -> ParseResponse -> {23, 204, 4.9}
+ * 3. "31.08.2018" -> GetWeatherInfoForDate -> { {20, 181, 5.1}, {23, 204, 4.9}, {33, 193, 4.3}, {26, 179, 4.5} }
+ * 4. "01.09.2018" -> GetWeatherInfoForDate -> { {19, 176, 4.2}, {22, 131, 4.1}, {31, 109, 4.0}, {24, 127, 4.1} }
+ * 5. "31.08.2018" -> GetAverageTemperature -> 25.5
+ * 6. "31.08.2018" -> GetMinimumTemperature -> 20
+ * 7. "31.08.2018" -> GetMaximumTemperature -> 33
+ * 8. "31.08.2018" -> GetAverageWindDirection -> 189.25
+ * 9. "31.08.2018" -> GetMaximumWindSpeed -> 5.1
+ * 10. "01.09.2018" -> GetAverageTemperature -> 24
+ * 11. "01.09.2018" -> GetMinimumTemperature -> 19
+ * 12. "01.09.2018" -> GetMaximumTemperature -> 31
+ * 13. "01.09.2018" -> GetAverageWindDirection -> 135.75
+ * 14. "01.09.2018" -> GetMaximumWindSpeed -> 4
+ */
+
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
