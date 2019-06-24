@@ -176,3 +176,12 @@ TEST(weatherClient, ParseResponse1)
     WeatherInfo expectedInfo = {20, 181, 5.1};
     ASSERT_EQ(expectedInfo, weatherClient.ParseResponse("20;181;5.1"));
 }
+
+//"23;204;4.9" -> ParseResponse -> {23, 204, 4.9}
+TEST(weatherClient, ParseResponse2)
+{
+    WeatherServer weatherServer;
+    WeatherClient weatherClient(&weatherServer);
+    WeatherInfo expectedInfo = {23, 204, 4.9};
+    ASSERT_EQ(expectedInfo, weatherClient.ParseResponse("23;204;4.9"));
+}
