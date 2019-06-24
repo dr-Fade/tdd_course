@@ -199,7 +199,16 @@ public:
 
     double GetAverageWindDirection(IWeatherServer& server, const std::string& date)
     {
+        double result = 0;
+        std::vector<WeatherInfo> weatherInfo;
+        GetWeatherInfoForDate(server, date, weatherInfo);
 
+        for (WeatherInfo& wi : weatherInfo)
+        {
+            result += wi.windDirection;
+        }
+
+        return result / 4.;
     }
 
     double GetMaximumWindSpeed(IWeatherServer& server, const std::string& date)
