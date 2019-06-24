@@ -93,6 +93,10 @@ public:
         if(request == "31.08.2018;09:00") return "23;204;4.9";
         if(request == "31.08.2018;15:00") return "33;193;4.3";
         if(request == "31.08.2018;21:00") return "26;179;4.5";
+        if(request == "01.09.2018;03:00") return "19;176;4.2";
+        if(request == "01.09.2018;09:00") return "22;131;4.1";
+        if(request == "01.09.2018;15:00") return "31;109;4.0";
+        if(request == "01.09.2018;21:00") return "24;127;4.1";
         return "";
     }
 };
@@ -209,6 +213,22 @@ TEST(weatherClient, GetWeatherInfoForDate1)
     std::vector<WeatherInfo> expectedInfo = { {20, 181, 5.1}, {23, 204, 4.9}, {33, 193, 4.3}, {26, 179, 4.5} };
 
     std::string date = "31.08.2018";
+    std::vector<WeatherInfo> actualInfo;
+
+    weatherClient.GetWeatherInfoForDate(date, actualInfo);
+
+    ASSERT_EQ(actualInfo, expectedInfo);
+}
+
+//"01.09.2018" -> GetWeatherInfoForDate -> { {19, 176, 4.2}, {22, 131, 4.1}, {31, 109, 4.0}, {24, 127, 4.1} }
+TEST(weatherClient, GetWeatherInfoForDate2)
+{
+    WeatherServer weatherServer;
+    WeatherClient weatherClient(&weatherServer);
+
+    std::vector<WeatherInfo> expectedInfo = { {19, 176, 4.2}, {22, 131, 4.1}, {31, 109, 4.0}, {24, 127, 4.1} };
+
+    std::string date = "01.09.2018";
     std::vector<WeatherInfo> actualInfo;
 
     weatherClient.GetWeatherInfoForDate(date, actualInfo);
