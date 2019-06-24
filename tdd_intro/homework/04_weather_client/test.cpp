@@ -139,6 +139,11 @@ public:
         return result;
     }
 
+    void GetWeatherInfoForDate(const std::string& date, std::vector<WeatherInfo>& weatherInfo)
+    {
+
+    }
+
     double GetAverageTemperature(IWeatherServer& server, const std::string& date)
     {
 
@@ -184,4 +189,20 @@ TEST(weatherClient, ParseResponse2)
     WeatherClient weatherClient(&weatherServer);
     WeatherInfo expectedInfo = {23, 204, 4.9};
     ASSERT_EQ(expectedInfo, weatherClient.ParseResponse("23;204;4.9"));
+}
+
+//"31.08.2018" -> GetWeatherInfoForDate -> { {20, 181, 5.1}, {23, 204, 4.9}, {33, 193, 4.3}, {26, 179, 4.5} }
+TEST(weatherClient, GetWeatherInfoForDate1)
+{
+    WeatherServer weatherServer;
+    WeatherClient weatherClient(&weatherServer);
+
+    std::vector<WeatherInfo> expectedInfo = { {20, 181, 5.1}, {23, 204, 4.9}, {33, 193, 4.3}, {26, 179, 4.5} };
+
+    std::string date = "31.08.2018";
+    std::vector<WeatherInfo> actualInfo;
+
+    weatherClient.GetWeatherInfoForDate(date, actualInfo);
+
+    ASSERT_EQ(actualInfo, expectedInfo);
 }
