@@ -89,6 +89,10 @@ public:
     // Returns raw response with weather for the given day and time in request
     std::string GetWeather(const std::string& request)
     {
+        if(request == "31.08.2018;03:00") return "20;181;5.1";
+        if(request == "31.08.2018;09:00") return "23;204;4.9";
+        if(request == "31.08.2018;15:00") return "33;193;4.3";
+        if(request == "31.08.2018;21:00") return "26;179;4.5";
         return "";
     }
 };
@@ -141,7 +145,12 @@ public:
 
     void GetWeatherInfoForDate(const std::string& date, std::vector<WeatherInfo>& weatherInfo)
     {
-
+        for(auto time : { "03:00", "09:00", "15:00", "21:00" })
+        {
+            weatherInfo.push_back(
+                ParseResponse(m_weatherServer->GetWeather(date + ";" + time))
+            );
+        }
     }
 
     double GetAverageTemperature(IWeatherServer& server, const std::string& date)
