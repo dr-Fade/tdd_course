@@ -213,7 +213,16 @@ public:
 
     double GetMaximumWindSpeed(IWeatherServer& server, const std::string& date)
     {
+        std::vector<WeatherInfo> weatherInfo;
+        GetWeatherInfoForDate(server, date, weatherInfo);
 
+        double result = weatherInfo.front().windSpeed;
+        for (int i = 1; i < 4; i++)
+        {
+            result = result > weatherInfo[i].windSpeed ? result : weatherInfo[i].windSpeed;
+        }
+
+        return result;
     }
 };
 
