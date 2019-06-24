@@ -130,9 +130,7 @@ bool operator==(const WeatherInfo& lhs, const WeatherInfo& rhs)
 class WeatherClient : public IWeatherClient
 {
 public:
-    WeatherClient(IWeatherServer* weatherServer)
-        : m_weatherServer(weatherServer)
-    {}
+    WeatherClient() { }
 
     virtual ~WeatherClient() { }
 
@@ -147,12 +145,12 @@ public:
         return result;
     }
 
-    void GetWeatherInfoForDate(const std::string& date, std::vector<WeatherInfo>& weatherInfo)
+    void GetWeatherInfoForDate(IWeatherServer& server, const std::string& date, std::vector<WeatherInfo>& weatherInfo)
     {
         for(auto time : { "03:00", "09:00", "15:00", "21:00" })
         {
             weatherInfo.push_back(
-                ParseResponse(m_weatherServer->GetWeather(date + ";" + time))
+                ParseResponse(server.GetWeather(date + ";" + time))
             );
         }
     }
@@ -181,16 +179,12 @@ public:
     {
 
     }
-
-private:
-    IWeatherServer* m_weatherServer;
 };
 
 //"20;181;5.1" -> ParseResponse -> {20, 181, 5.1}
 TEST(weatherClient, ParseResponse1)
 {
-    WeatherServer weatherServer;
-    WeatherClient weatherClient(&weatherServer);
+    WeatherClient weatherClient;
     WeatherInfo expectedInfo = {20, 181, 5.1};
     ASSERT_EQ(expectedInfo, weatherClient.ParseResponse("20;181;5.1"));
 }
@@ -198,8 +192,7 @@ TEST(weatherClient, ParseResponse1)
 //"23;204;4.9" -> ParseResponse -> {23, 204, 4.9}
 TEST(weatherClient, ParseResponse2)
 {
-    WeatherServer weatherServer;
-    WeatherClient weatherClient(&weatherServer);
+    WeatherClient weatherClient;
     WeatherInfo expectedInfo = {23, 204, 4.9};
     ASSERT_EQ(expectedInfo, weatherClient.ParseResponse("23;204;4.9"));
 }
@@ -208,14 +201,14 @@ TEST(weatherClient, ParseResponse2)
 TEST(weatherClient, GetWeatherInfoForDate1)
 {
     WeatherServer weatherServer;
-    WeatherClient weatherClient(&weatherServer);
+    WeatherClient weatherClient;
 
     std::vector<WeatherInfo> expectedInfo = { {20, 181, 5.1}, {23, 204, 4.9}, {33, 193, 4.3}, {26, 179, 4.5} };
 
     std::string date = "31.08.2018";
     std::vector<WeatherInfo> actualInfo;
 
-    weatherClient.GetWeatherInfoForDate(date, actualInfo);
+    weatherClient.GetWeatherInfoForDate(weatherServer, date, actualInfo);
 
     ASSERT_EQ(actualInfo, expectedInfo);
 }
@@ -224,14 +217,14 @@ TEST(weatherClient, GetWeatherInfoForDate1)
 TEST(weatherClient, GetWeatherInfoForDate2)
 {
     WeatherServer weatherServer;
-    WeatherClient weatherClient(&weatherServer);
+    WeatherClient weatherClient;
 
     std::vector<WeatherInfo> expectedInfo = { {19, 176, 4.2}, {22, 131, 4.1}, {31, 109, 4.0}, {24, 127, 4.1} };
 
     std::string date = "01.09.2018";
     std::vector<WeatherInfo> actualInfo;
 
-    weatherClient.GetWeatherInfoForDate(date, actualInfo);
+    weatherClient.GetWeatherInfoForDate(weatherServer, date, actualInfo);
 
     ASSERT_EQ(actualInfo, expectedInfo);
 }
