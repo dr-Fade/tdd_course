@@ -333,3 +333,15 @@ TEST(weatherClient, GetMaximumWindSpeed1)
 
     ASSERT_EQ(expectedInfo, weatherClient.GetMaximumWindSpeed(weatherServer, date));
 }
+
+//"01.09.2018" -> GetAverageTemperature -> 24
+TEST(weatherClient, GetAverageTemperature2)
+{
+    WeatherServer weatherServer;
+    WeatherClient weatherClient;
+
+    double expectedInfo = 24;
+    std::string date = "01.09.2018";
+
+    ASSERT_EQ(expectedInfo, weatherClient.GetAverageTemperature(weatherServer, date));
+}
