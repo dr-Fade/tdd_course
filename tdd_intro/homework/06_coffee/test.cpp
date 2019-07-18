@@ -183,6 +183,29 @@ public:
     }
 };
 
+enum CupSize {
+    SMALL, BIG
+};
+
+class IRecipe
+{
+public:
+    IRecipe(CupSize size, ISourceOfIngredients* src) {}
+    virtual void make() = 0;
+};
+
+class Americano : public IRecipe
+{
+public:
+    Americano(CupSize size, ISourceOfIngredients* src)
+        : IRecipe(size, src)
+    {}
+    void make()
+    {
+
+    }
+};
+
 // 1. Temperature.get(0) -> getTemperature(0)
 
 TEST(CoffeeMachine, TemperatureGet0CallsGetTemperature0)
@@ -261,4 +284,16 @@ TEST(CoffeeMachine, CreamGet0CallsGetCream0)
     Cream cream(&src, 0);
     EXPECT_CALL(src, getCream(0)).Times(AtLeast(1));
     cream.get();
+}
+
+// 9. Americano.make(CupSize.SMALL) -> getWater(50), getCoffee(50), getTemperature(60)
+
+TEST(CoffeeMachine, AmericanoMakeSmallCup)
+{
+    SourceOfIngredientsMock src;
+    Americano americano(CupSize::SMALL, &src);
+    EXPECT_CALL(src, getWater(50)).Times(AtLeast(1));
+    EXPECT_CALL(src, getCoffee(50)).Times(AtLeast(1));
+    EXPECT_CALL(src, getTemperature(60)).Times(AtLeast(1));
+    americano.make();
 }
