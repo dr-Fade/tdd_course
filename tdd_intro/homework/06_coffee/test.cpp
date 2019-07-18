@@ -90,6 +90,7 @@ public:
         : m_src(src)
         , m_val(val)
     {}
+    virtual ~Ingredient() {}
     virtual void get() = 0;
 protected:
     ISourceOfIngredients* m_src;
@@ -192,6 +193,14 @@ class IRecipe
 {
 public:
     IRecipe(CupSize size, ISourceOfIngredients* src) {}
+    ~IRecipe() {
+        for(auto i : m_ingredients)
+        {
+            delete i;
+        }
+        m_ingredients.clear();
+    }
+
     virtual void make() = 0;
 protected:
     std::vector<Ingredient*> m_ingredients;
@@ -205,14 +214,6 @@ public:
         : IRecipe(size, src)
     {
         if(size == CupSize::SMALL)
-        {
-            m_ingredients = {
-                new Water(src, 50),
-                new Coffee(src, 50),
-                new Temperature(src, 60)
-            };
-        }
-        else if(size == CupSize::BIG)
         {
             m_ingredients = {
                 new Water(src, 50),
@@ -317,6 +318,20 @@ TEST(CoffeeMachine, AmericanoMakeSmallCup)
     Americano americano(CupSize::SMALL, &src);
     EXPECT_CALL(src, getWater(50)).Times(AtLeast(1));
     EXPECT_CALL(src, getCoffee(50)).Times(AtLeast(1));
+    EXPECT_CALL(src, getTemperature(60)).Times(AtLeast(1));
+    americano.make();
+}
+
+
+
+// 10 Americano.make(CupSize.BIG) -> getWater(70), getCoffee(70), getTemperature(60)
+
+TEST(CoffeeMachine, AmericanoMakeBigCup)
+{
+    SourceOfIngredientsMock src;
+    Americano americano(CupSize::BIG, &src);
+    EXPECT_CALL(src, getWater(70)).Times(AtLeast(1));
+    EXPECT_CALL(src, getCoffee(70)).Times(AtLeast(1));
     EXPECT_CALL(src, getTemperature(60)).Times(AtLeast(1));
     americano.make();
 }
