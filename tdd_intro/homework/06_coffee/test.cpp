@@ -276,6 +276,15 @@ public:
     Latte(CupSize size, ISourceOfIngredients* src)
         : IRecipe(size, src)
     {
+        if(size == CupSize::SMALL)
+        {
+            m_ingredients = {
+                new Milk(src, 25),
+                new Coffee(src, 50),
+                new MilkFoam(src, 25),
+                new Temperature(src, 90)
+            };
+        }
     }
     void make()
     {
