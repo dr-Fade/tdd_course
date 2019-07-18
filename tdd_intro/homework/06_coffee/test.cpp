@@ -192,7 +192,9 @@ enum CupSize {
 class IRecipe
 {
 public:
-    IRecipe(CupSize size, ISourceOfIngredients* src) {}
+    IRecipe(ISourceOfIngredients* src)
+        : m_src(src)
+    {}
     ~IRecipe() {
         for(auto i : m_ingredients)
         {
@@ -201,36 +203,36 @@ public:
         m_ingredients.clear();
     }
 
-    virtual void make() = 0;
+    virtual void make(CupSize size) = 0;
 protected:
     std::vector<Ingredient*> m_ingredients;
+    ISourceOfIngredients* m_src;
 };
 
 class Americano : public IRecipe
 {
 public:
-    Americano(CupSize size = CupSize::SMALL, ISourceOfIngredients* src = nullptr)
-        : IRecipe(size, src)
+    Americano(ISourceOfIngredients* src)
+        : IRecipe(src)
+    {}
+    void make(CupSize size)
     {
         if(size == CupSize::SMALL)
         {
             m_ingredients = {
-                new Water(src, 50),
-                new Coffee(src, 50),
-                new Temperature(src, 60)
+                new Water(m_src, 50),
+                new Coffee(m_src, 50),
+                new Temperature(m_src, 60)
             };
         }
         if(size == CupSize::BIG)
         {
             m_ingredients = {
-                new Water(src, 70),
-                new Coffee(src, 70),
-                new Temperature(src, 60)
+                new Water(m_src, 70),
+                new Coffee(m_src, 70),
+                new Temperature(m_src, 60)
             };
         }
-    }
-    void make()
-    {
         for(auto i : m_ingredients) {
             i->get();
         }
@@ -240,30 +242,29 @@ public:
 class Cappuccino : public IRecipe
 {
 public:
-    Cappuccino(CupSize size, ISourceOfIngredients* src)
-        : IRecipe(size, src)
+    Cappuccino(ISourceOfIngredients* src)
+        : IRecipe(src)
+    {}
+    void make(CupSize size)
     {
         if(size == CupSize::SMALL)
         {
             m_ingredients = {
-                new Milk(src, 33),
-                new Coffee(src, 33),
-                new MilkFoam(src, 33),
-                new Temperature(src, 80)
+                new Milk(m_src, 33),
+                new Coffee(m_src, 33),
+                new MilkFoam(m_src, 33),
+                new Temperature(m_src, 80)
             };
         }
         if(size == CupSize::BIG)
         {
             m_ingredients = {
-                new Milk(src, 46),
-                new Coffee(src, 46),
-                new MilkFoam(src, 46),
-                new Temperature(src, 80)
+                new Milk(m_src, 46),
+                new Coffee(m_src, 46),
+                new MilkFoam(m_src, 46),
+                new Temperature(m_src, 80)
             };
         }
-    }
-    void make()
-    {
         for(auto i : m_ingredients) {
             i->get();
         }
@@ -273,30 +274,29 @@ public:
 class Latte : public IRecipe
 {
 public:
-    Latte(CupSize size, ISourceOfIngredients* src)
-        : IRecipe(size, src)
+    Latte(ISourceOfIngredients* src)
+        : IRecipe(src)
+    {}
+    void make(CupSize size)
     {
         if(size == CupSize::SMALL)
         {
             m_ingredients = {
-                new Milk(src, 25),
-                new Coffee(src, 50),
-                new MilkFoam(src, 25),
-                new Temperature(src, 90)
+                new Milk(m_src, 25),
+                new Coffee(m_src, 50),
+                new MilkFoam(m_src, 25),
+                new Temperature(m_src, 90)
             };
         }
         if(size == CupSize::BIG)
         {
             m_ingredients = {
-                new Milk(src, 35),
-                new Coffee(src, 70),
-                new MilkFoam(src, 35),
-                new Temperature(src, 90)
+                new Milk(m_src, 35),
+                new Coffee(m_src, 70),
+                new MilkFoam(m_src, 35),
+                new Temperature(m_src, 90)
             };
         }
-    }
-    void make()
-    {
         for(auto i : m_ingredients) {
             i->get();
         }
@@ -306,28 +306,27 @@ public:
 class Marochino : public IRecipe
 {
 public:
-    Marochino(CupSize size, ISourceOfIngredients* src)
-        : IRecipe(size, src)
+    Marochino(ISourceOfIngredients* src)
+        : IRecipe(src)
+    {}
+    void make(CupSize size)
     {
         if(size == CupSize::SMALL)
         {
             m_ingredients = {
-                new Chocolate(src, 25),
-                new Coffee(src, 25),
-                new MilkFoam(src, 25)
+                new Chocolate(m_src, 25),
+                new Coffee(m_src, 25),
+                new MilkFoam(m_src, 25)
             };
         }
         if(size == CupSize::BIG)
         {
             m_ingredients = {
-                new Chocolate(src, 35),
-                new Coffee(src, 35),
-                new MilkFoam(src, 35)
+                new Chocolate(m_src, 35),
+                new Coffee(m_src, 35),
+                new MilkFoam(m_src, 35)
             };
         }
-    }
-    void make()
-    {
         for(auto i : m_ingredients) {
             i->get();
         }
@@ -419,11 +418,11 @@ TEST(CoffeeMachine, CreamGet0CallsGetCream0)
 TEST(CoffeeMachine, AmericanoMakeSmallCup)
 {
     SourceOfIngredientsMock src;
-    Americano americano(CupSize::SMALL, &src);
+    Americano americano(&src);
     EXPECT_CALL(src, getWater(50)).Times(AtLeast(1));
     EXPECT_CALL(src, getCoffee(50)).Times(AtLeast(1));
     EXPECT_CALL(src, getTemperature(60)).Times(AtLeast(1));
-    americano.make();
+    americano.make(CupSize::SMALL);
 }
 
 // 10 Americano.make(CupSize.BIG) -> getWater(70), getCoffee(70), getTemperature(60)
@@ -431,11 +430,11 @@ TEST(CoffeeMachine, AmericanoMakeSmallCup)
 TEST(CoffeeMachine, AmericanoMakeBigCup)
 {
     SourceOfIngredientsMock src;
-    Americano americano(CupSize::BIG, &src);
+    Americano americano(&src);
     EXPECT_CALL(src, getWater(70)).Times(AtLeast(1));
     EXPECT_CALL(src, getCoffee(70)).Times(AtLeast(1));
     EXPECT_CALL(src, getTemperature(60)).Times(AtLeast(1));
-    americano.make();
+    americano.make(CupSize::BIG);
 }
 
 // 11. Cappuccino.make(CupSize.SMALL) -> getMilk(33), getCoffee(33), getMilkFoam(33), getTemperature(80)
@@ -443,12 +442,12 @@ TEST(CoffeeMachine, AmericanoMakeBigCup)
 TEST(CoffeeMachine, CappuccinoSmallCup)
 {
     SourceOfIngredientsMock src;
-    Cappuccino cappuccino(CupSize::SMALL, &src);
+    Cappuccino cappuccino(&src);
     EXPECT_CALL(src, getMilk(33)).Times(AtLeast(1));
     EXPECT_CALL(src, getCoffee(33)).Times(AtLeast(1));
     EXPECT_CALL(src, getMilkFoam(33)).Times(AtLeast(1));
     EXPECT_CALL(src, getTemperature(80)).Times(AtLeast(1));
-    cappuccino.make();
+    cappuccino.make(CupSize::SMALL);
 }
 
 // 12. Cappuccino.make(CupSize.BIG) -> getMilk(46), getCoffee(46), getMilkFoam(46), getTemperature(80)
@@ -456,24 +455,24 @@ TEST(CoffeeMachine, CappuccinoSmallCup)
 TEST(CoffeeMachine, CappuccinoBigCup)
 {
     SourceOfIngredientsMock src;
-    Cappuccino cappuccino(CupSize::BIG, &src);
+    Cappuccino cappuccino(&src);
     EXPECT_CALL(src, getMilk(46)).Times(AtLeast(1));
     EXPECT_CALL(src, getCoffee(46)).Times(AtLeast(1));
     EXPECT_CALL(src, getMilkFoam(46)).Times(AtLeast(1));
     EXPECT_CALL(src, getTemperature(80)).Times(AtLeast(1));
-    cappuccino.make();
+    cappuccino.make(CupSize::BIG);
 }
 // 13. Latte.make(CupSize.SMALL) -> getMilk(25), getCoffee(50), getMilkFoam(25), getTemperature(90)
 
 TEST(CoffeeMachine, LatteSmallCup)
 {
     SourceOfIngredientsMock src;
-    Latte latte(CupSize::SMALL, &src);
+    Latte latte(&src);
     EXPECT_CALL(src, getMilk(25)).Times(AtLeast(1));
     EXPECT_CALL(src, getCoffee(50)).Times(AtLeast(1));
     EXPECT_CALL(src, getMilkFoam(25)).Times(AtLeast(1));
     EXPECT_CALL(src, getTemperature(90)).Times(AtLeast(1));
-    latte.make();
+    latte.make(CupSize::SMALL);
 }
 
 // 14. Latte.make(CupSize.BIG) -> getMilk(35), getCoffee(70), getMilkFoam(35), getTemperature(90)
@@ -481,12 +480,12 @@ TEST(CoffeeMachine, LatteSmallCup)
 TEST(CoffeeMachine, LatteBigCup)
 {
     SourceOfIngredientsMock src;
-    Latte latte(CupSize::BIG, &src);
+    Latte latte(&src);
     EXPECT_CALL(src, getMilk(35)).Times(AtLeast(1));
     EXPECT_CALL(src, getCoffee(70)).Times(AtLeast(1));
     EXPECT_CALL(src, getMilkFoam(35)).Times(AtLeast(1));
     EXPECT_CALL(src, getTemperature(90)).Times(AtLeast(1));
-    latte.make();
+    latte.make(CupSize::BIG);
 }
 
 // 15. Marochino.make(CupSize.SMALL) -> getChocolate(25), getCoffee(25), getMilkFoam(25)
@@ -494,11 +493,11 @@ TEST(CoffeeMachine, LatteBigCup)
 TEST(CoffeeMachine, MarochinoSmallCup)
 {
     SourceOfIngredientsMock src;
-    Marochino marochino(CupSize::SMALL, &src);
+    Marochino marochino(&src);
     EXPECT_CALL(src, getChocolate(25)).Times(AtLeast(1));
     EXPECT_CALL(src, getCoffee(25)).Times(AtLeast(1));
     EXPECT_CALL(src, getMilkFoam(25)).Times(AtLeast(1));
-    marochino.make();
+    marochino.make(CupSize::SMALL);
 }
 
 // 16. Marochino.make(CupSize.BIG) -> getChocolate(35), getCoffee(35), getMilkFoam(35)
@@ -506,11 +505,11 @@ TEST(CoffeeMachine, MarochinoSmallCup)
 TEST(CoffeeMachine, MarochinoBigCup)
 {
     SourceOfIngredientsMock src;
-    Marochino marochino(CupSize::BIG, &src);
+    Marochino marochino(&src);
     EXPECT_CALL(src, getChocolate(35)).Times(AtLeast(1));
     EXPECT_CALL(src, getCoffee(35)).Times(AtLeast(1));
     EXPECT_CALL(src, getMilkFoam(35)).Times(AtLeast(1));
-    marochino.make();
+    marochino.make(CupSize::BIG);
 }
 
 // 17. makeCoffee(CoffeeType.AMERICANO, CupSize.LITTLE) -> Americano.make(CupSize.SMALL)
