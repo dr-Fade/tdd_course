@@ -540,114 +540,40 @@ TEST(CoffeeMachine, MarochinoBigCup)
     marochino.make(CupSize::BIG);
 }
 
-// 17. makeCoffee(CoffeeType.AMERICANO, CupSize.LITTLE) -> Americano.make(CupSize.SMALL)
+// 17. makeCoffee
 
-TEST(CoffeeMachine, makeSmallCupOfAmericano)
+TEST(CoffeeMachine, makeCoffee)
 {
-    MockRecipe americano;
+    MockRecipe americano, cappuccino, latte, marochino;
     CoffeeMachine coffeeMachine(
     {
-        { CoffeeType::AMERICANO, &americano }
+        { CoffeeType::AMERICANO, &americano },
+        { CoffeeType::CAPPUCCINO, &cappuccino },
+        { CoffeeType::LATTE, &latte },
+        { CoffeeType::MAROCHINO, &marochino }
     }
     );
     EXPECT_CALL(americano, make(CupSize::SMALL)).Times(Exactly(1));
-    coffeeMachine.makeCoffee(CoffeeType::AMERICANO, CupSize::SMALL);
-}
-
-// 18. makeCoffee(CoffeeType.AMERICANO, CupSize.BIG) -> Americano.make(CupSize.BIG)
-
-TEST(CoffeeMachine, makeBigCupOfAmericano)
-{
-    MockRecipe americano;
-    CoffeeMachine coffeeMachine(
-    {
-        { CoffeeType::AMERICANO, &americano }
-    }
-    );
     EXPECT_CALL(americano, make(CupSize::BIG)).Times(Exactly(1));
-    coffeeMachine.makeCoffee(CoffeeType::AMERICANO, CupSize::BIG);
-}
 
-// 19. makeCoffee(CoffeeType.CAPPUCCINO, CupSize.LITTLE) -> Cappuccino.make(CupSize.SMALL))
-
-TEST(CoffeeMachine, makeSmallCupOfCappuccino)
-{
-    MockRecipe cappuccino;
-    CoffeeMachine coffeeMachine(
-    {
-        { CoffeeType::CAPPUCCINO, &cappuccino }
-    }
-    );
     EXPECT_CALL(cappuccino, make(CupSize::SMALL)).Times(Exactly(1));
-    coffeeMachine.makeCoffee(CoffeeType::CAPPUCCINO, CupSize::SMALL);
-}
-
-// 20. makeCoffee(CoffeeType.CAPPUCCINO, CupSize.BIG) -> Cappuccino.make(CupSize.BIG)
-
-TEST(CoffeeMachine, makeBigCupOfCappuccino)
-{
-    MockRecipe cappuccino;
-    CoffeeMachine coffeeMachine(
-    {
-        { CoffeeType::CAPPUCCINO, &cappuccino }
-    }
-    );
     EXPECT_CALL(cappuccino, make(CupSize::BIG)).Times(Exactly(1));
-    coffeeMachine.makeCoffee(CoffeeType::CAPPUCCINO, CupSize::BIG);
-}
 
-// 21. makeCoffee(CoffeeType.LATTE, CupSize.LITTLE) -> Latte.make(CupSize.SMALL)
-
-TEST(CoffeeMachine, makeSmallCupOfLatte)
-{
-    MockRecipe latte;
-    CoffeeMachine coffeeMachine(
-    {
-        { CoffeeType::LATTE, &latte }
-    }
-    );
     EXPECT_CALL(latte, make(CupSize::SMALL)).Times(Exactly(1));
-    coffeeMachine.makeCoffee(CoffeeType::LATTE, CupSize::SMALL);
-}
-
-// 22. makeCoffee(CoffeeType.LATTE, CupSize.BIG) -> Latte.make(CupSize.BIG)
-
-TEST(CoffeeMachine, makeBigCupOfLatte)
-{
-    MockRecipe latte;
-    CoffeeMachine coffeeMachine(
-    {
-        { CoffeeType::LATTE, &latte }
-    }
-    );
     EXPECT_CALL(latte, make(CupSize::BIG)).Times(Exactly(1));
-    coffeeMachine.makeCoffee(CoffeeType::LATTE, CupSize::BIG);
-}
 
-// 23. makeCoffee(CoffeeType.MAROCHINO, CupSize.LITTLE) -> Marochino.make(CupSize.SMALL)
-
-TEST(CoffeeMachine, makeSmallCupOfMarochino)
-{
-    MockRecipe marochino;
-    CoffeeMachine coffeeMachine(
-    {
-        { CoffeeType::MAROCHINO, &marochino }
-    }
-    );
     EXPECT_CALL(marochino, make(CupSize::SMALL)).Times(Exactly(1));
-    coffeeMachine.makeCoffee(CoffeeType::MAROCHINO, CupSize::SMALL);
-}
-
-// 24. makeCoffee(CoffeeType.MAROCHINO, CupSize.BIG) -> Marochino.make(CupSize.BIG)
-
-TEST(CoffeeMachine, makeBigCupOfMarochino)
-{
-    MockRecipe marochino;
-    CoffeeMachine coffeeMachine(
-    {
-        { CoffeeType::MAROCHINO, &marochino }
-    }
-    );
     EXPECT_CALL(marochino, make(CupSize::BIG)).Times(Exactly(1));
+
+    coffeeMachine.makeCoffee(CoffeeType::AMERICANO, CupSize::SMALL);
+    coffeeMachine.makeCoffee(CoffeeType::AMERICANO, CupSize::BIG);
+
+    coffeeMachine.makeCoffee(CoffeeType::CAPPUCCINO, CupSize::SMALL);
+    coffeeMachine.makeCoffee(CoffeeType::CAPPUCCINO, CupSize::BIG);
+
+    coffeeMachine.makeCoffee(CoffeeType::LATTE, CupSize::SMALL);
+    coffeeMachine.makeCoffee(CoffeeType::LATTE, CupSize::BIG);
+
+    coffeeMachine.makeCoffee(CoffeeType::MAROCHINO, CupSize::SMALL);
     coffeeMachine.makeCoffee(CoffeeType::MAROCHINO, CupSize::BIG);
 }
