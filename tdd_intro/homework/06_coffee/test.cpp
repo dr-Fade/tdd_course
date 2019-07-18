@@ -639,3 +639,15 @@ TEST(CoffeeMachine, makeSmallCupOfMarochino)
 }
 
 // 24. makeCoffee(CoffeeType.MAROCHINO, CupSize.BIG) -> Marochino.make(CupSize.BIG)
+
+TEST(CoffeeMachine, makeBigCupOfMarochino)
+{
+    MockRecipe marochino;
+    CoffeeMachine coffeeMachine(
+    {
+        { CoffeeType::MAROCHINO, &marochino }
+    }
+    );
+    EXPECT_CALL(marochino, make(CupSize::BIG)).Times(Exactly(1));
+    coffeeMachine.makeCoffee(CoffeeType::MAROCHINO, CupSize::BIG);
+}
