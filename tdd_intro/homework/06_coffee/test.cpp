@@ -87,10 +87,12 @@ class Ingredient
 public:
     Ingredient(ISourceOfIngredients* src, int val)
         : m_src(src)
+        , m_val(val)
     {}
     virtual void get() = 0;
-private:
+protected:
     ISourceOfIngredients* m_src;
+    int m_val;
 };
 
 class Temperature : public Ingredient
@@ -98,7 +100,10 @@ class Temperature : public Ingredient
 public:
     Temperature(ISourceOfIngredients* src, int degrees)
         : Ingredient(src, degrees) {}
-    void get() {}
+    void get()
+    {
+        m_src->getTemperature(m_val);
+    }
 };
 
 // 1. Temperature.get(0) -> getTemperature(0)
