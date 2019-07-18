@@ -209,7 +209,7 @@ protected:
 class Americano : public IRecipe
 {
 public:
-    Americano(CupSize size, ISourceOfIngredients* src)
+    Americano(CupSize size = CupSize::SMALL, ISourceOfIngredients* src = nullptr)
         : IRecipe(size, src)
     {
         if(size == CupSize::SMALL)
@@ -317,7 +317,14 @@ public:
                 new MilkFoam(src, 25)
             };
         }
-
+        if(size == CupSize::BIG)
+        {
+            m_ingredients = {
+                new Chocolate(src, 35),
+                new Coffee(src, 35),
+                new MilkFoam(src, 35)
+            };
+        }
     }
     void make()
     {
