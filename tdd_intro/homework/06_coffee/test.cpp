@@ -280,6 +280,15 @@ public:
     }
 };
 
+class MockCappuccino: public Cappuccino
+{
+public:
+    MockCappuccino()
+        : Cappuccino(nullptr)
+    {}
+    MOCK_METHOD1(make, void(CupSize size));
+};
+
 class Latte : public IRecipe
 {
 public:
@@ -569,6 +578,18 @@ TEST(CoffeeMachine, makeBigCupOfAmericano)
 }
 
 // 19. makeCoffee(CoffeeType.CAPPUCCINO, CupSize.LITTLE) -> Cappuccino.make(CupSize.SMALL))
+
+TEST(CoffeeMachine, makeSmallCupOfCappuccino)
+{
+    MockCappuccino cappuccino;
+    CoffeeMachine coffeeMachine(
+    {
+        { CoffeeType::CAPPUCCINO, &cappuccino }
+    }
+    );
+    EXPECT_CALL(cappuccino, make(CupSize::SMALL)).Times(AtLeast(1));
+    coffeeMachine.makeCoffee(CoffeeType::CAPPUCCINO, CupSize::SMALL);
+}
 
 // 20. makeCoffee(CoffeeType.CAPPUCCINO, CupSize.BIG) -> Cappuccino.make(CupSize.BIG)
 
