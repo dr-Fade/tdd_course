@@ -206,7 +206,6 @@ protected:
     std::vector<Ingredient*> m_ingredients;
 };
 
-//getWater(50), getCoffee(50), getTemperature(60)
 class Americano : public IRecipe
 {
 public:
@@ -227,6 +226,30 @@ public:
                 new Water(src, 70),
                 new Coffee(src, 70),
                 new Temperature(src, 60)
+            };
+        }
+    }
+    void make()
+    {
+        for(auto i : m_ingredients) {
+            i->get();
+        }
+    }
+};
+
+class Cappuccino : public IRecipe
+{
+public:
+    Cappuccino(CupSize size, ISourceOfIngredients* src)
+        : IRecipe(size, src)
+    {
+        if(size == CupSize::SMALL)
+        {
+            m_ingredients = {
+                new Milk(src, 33),
+                new Coffee(src, 33),
+                new MilkFoam(src, 33),
+                new Temperature(src, 80)
             };
         }
     }
@@ -330,8 +353,6 @@ TEST(CoffeeMachine, AmericanoMakeSmallCup)
     americano.make();
 }
 
-
-
 // 10 Americano.make(CupSize.BIG) -> getWater(70), getCoffee(70), getTemperature(60)
 
 TEST(CoffeeMachine, AmericanoMakeBigCup)
@@ -342,4 +363,17 @@ TEST(CoffeeMachine, AmericanoMakeBigCup)
     EXPECT_CALL(src, getCoffee(70)).Times(AtLeast(1));
     EXPECT_CALL(src, getTemperature(60)).Times(AtLeast(1));
     americano.make();
+}
+
+// 11. Cappuccino.make(CupSize.SMALL) -> getMilk(33), getCoffee(33), getMilkFoam(33), getTemperature(80)
+
+TEST(CoffeeMachine, CappuccinoSmallVup)
+{
+    SourceOfIngredientsMock src;
+    Cappuccino cappuccino(CupSize::SMALL, &src);
+    EXPECT_CALL(src, getMilk(33)).Times(AtLeast(1));
+    EXPECT_CALL(src, getCoffee(33)).Times(AtLeast(1));
+    EXPECT_CALL(src, getMilkFoam(33)).Times(AtLeast(1));
+    EXPECT_CALL(src, getTemperature(80)).Times(AtLeast(1));
+    cappuccino.make();
 }
