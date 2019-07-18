@@ -252,6 +252,15 @@ public:
                 new Temperature(src, 80)
             };
         }
+        if(size == CupSize::BIG)
+        {
+            m_ingredients = {
+                new Milk(src, 46),
+                new Coffee(src, 46),
+                new MilkFoam(src, 46),
+                new Temperature(src, 80)
+            };
+        }
     }
     void make()
     {
