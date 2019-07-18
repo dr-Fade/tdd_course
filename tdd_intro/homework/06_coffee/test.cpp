@@ -221,6 +221,14 @@ public:
                 new Temperature(src, 60)
             };
         }
+        if(size == CupSize::BIG)
+        {
+            m_ingredients = {
+                new Water(src, 70),
+                new Coffee(src, 70),
+                new Temperature(src, 60)
+            };
+        }
     }
     void make()
     {
