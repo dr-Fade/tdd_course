@@ -53,6 +53,7 @@ Implement worked coffee machine using ISourceOfIngredients to controll the proce
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include <memory>
 using testing::AtLeast;
 
 class ISourceOfIngredients
@@ -192,17 +193,39 @@ class IRecipe
 public:
     IRecipe(CupSize size, ISourceOfIngredients* src) {}
     virtual void make() = 0;
+protected:
+    std::vector<Ingredient*> m_ingredients;
 };
 
+//getWater(50), getCoffee(50), getTemperature(60)
 class Americano : public IRecipe
 {
 public:
     Americano(CupSize size, ISourceOfIngredients* src)
         : IRecipe(size, src)
-    {}
+    {
+        if(size == CupSize::SMALL)
+        {
+            m_ingredients = {
+                new Water(src, 50),
+                new Coffee(src, 50),
+                new Temperature(src, 60)
+            };
+        }
+        else if(size == CupSize::BIG)
+        {
+            m_ingredients = {
+                new Water(src, 50),
+                new Coffee(src, 50),
+                new Temperature(src, 60)
+            };
+        }
+    }
     void make()
     {
-
+        for(auto i : m_ingredients) {
+            i->get();
+        }
     }
 };
 
