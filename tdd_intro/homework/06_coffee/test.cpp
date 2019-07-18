@@ -245,7 +245,7 @@ public:
     MockAmericano()
         : Americano(nullptr)
     {}
-    MOCK_METHOD1(makeCoffee, void(CupSize size));
+    MOCK_METHOD1(make, void(CupSize size));
 };
 
 class Cappuccino : public IRecipe
@@ -350,8 +350,15 @@ enum CoffeeType
 class CoffeeMachine
 {
 public:
-    CoffeeMachine(std::map<CoffeeType, IRecipe*> recipes) {}
-    void makeCoffee(CoffeeType type, CupSize size) {}
+    CoffeeMachine(std::map<CoffeeType, IRecipe*> recipes)
+        : m_recipes(recipes)
+    {}
+    void makeCoffee(CoffeeType type, CupSize size)
+    {
+        m_recipes.at(type)->make(size);
+    }
+private:
+    std::map<CoffeeType, IRecipe*> m_recipes;
 };
 
 // 1. Temperature.get(0) -> getTemperature(0)
@@ -543,7 +550,7 @@ TEST(CoffeeMachine, makeSmallCupOfAmericano)
         { CoffeeType::AMERICANO, &americano }
     }
     );
-    EXPECT_CALL(americano, makeCoffee(CupSize::SMALL)).Times(AtLeast(1));
+    EXPECT_CALL(americano, make(CupSize::SMALL)).Times(AtLeast(1));
     coffeeMachine.makeCoffee(CoffeeType::AMERICANO, CupSize::SMALL);
 }
 
