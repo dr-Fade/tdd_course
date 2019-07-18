@@ -309,6 +309,15 @@ public:
     Marochino(CupSize size, ISourceOfIngredients* src)
         : IRecipe(size, src)
     {
+        if(size == CupSize::SMALL)
+        {
+            m_ingredients = {
+                new Chocolate(src, 25),
+                new Coffee(src, 25),
+                new MilkFoam(src, 25)
+            };
+        }
+
     }
     void make()
     {
