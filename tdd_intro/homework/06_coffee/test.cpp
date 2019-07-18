@@ -584,6 +584,17 @@ TEST(CoffeeMachine, makeSmallCupOfCappuccino)
 
 // 20. makeCoffee(CoffeeType.CAPPUCCINO, CupSize.BIG) -> Cappuccino.make(CupSize.BIG)
 
+TEST(CoffeeMachine, makeBigCupOfCappuccino)
+{
+    MockRecipe cappuccino;
+    CoffeeMachine coffeeMachine(
+    {
+        { CoffeeType::CAPPUCCINO, &cappuccino }
+    }
+    );
+    EXPECT_CALL(cappuccino, make(CupSize::BIG)).Times(AtLeast(1));
+    coffeeMachine.makeCoffee(CoffeeType::CAPPUCCINO, CupSize::BIG);
+}
 // 21. makeCoffee(CoffeeType.LATTE, CupSize.LITTLE) -> Latte.make(CupSize.SMALL)
 
 // 22. makeCoffee(CoffeeType.LATTE, CupSize.BIG) -> Latte.make(CupSize.BIG)
