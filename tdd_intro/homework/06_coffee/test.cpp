@@ -239,15 +239,6 @@ public:
     }
 };
 
-class MockAmericano: public Americano
-{
-public:
-    MockAmericano()
-        : Americano(nullptr)
-    {}
-    MOCK_METHOD1(make, void(CupSize size));
-};
-
 class Cappuccino : public IRecipe
 {
 public:
@@ -278,15 +269,6 @@ public:
             i->get();
         }
     }
-};
-
-class MockCappuccino: public Cappuccino
-{
-public:
-    MockCappuccino()
-        : Cappuccino(nullptr)
-    {}
-    MOCK_METHOD1(make, void(CupSize size));
 };
 
 class Latte : public IRecipe
@@ -349,6 +331,15 @@ public:
             i->get();
         }
     }
+};
+
+class MockRecipe: public IRecipe
+{
+public:
+    MockRecipe()
+        : IRecipe(nullptr)
+    {}
+    MOCK_METHOD1(make, void(CupSize size));
 };
 
 enum CoffeeType
@@ -553,7 +544,7 @@ TEST(CoffeeMachine, MarochinoBigCup)
 
 TEST(CoffeeMachine, makeSmallCupOfAmericano)
 {
-    MockAmericano americano;
+    MockRecipe americano;
     CoffeeMachine coffeeMachine(
     {
         { CoffeeType::AMERICANO, &americano }
@@ -567,7 +558,7 @@ TEST(CoffeeMachine, makeSmallCupOfAmericano)
 
 TEST(CoffeeMachine, makeBigCupOfAmericano)
 {
-    MockAmericano americano;
+    MockRecipe americano;
     CoffeeMachine coffeeMachine(
     {
         { CoffeeType::AMERICANO, &americano }
@@ -581,7 +572,7 @@ TEST(CoffeeMachine, makeBigCupOfAmericano)
 
 TEST(CoffeeMachine, makeSmallCupOfCappuccino)
 {
-    MockCappuccino cappuccino;
+    MockRecipe cappuccino;
     CoffeeMachine coffeeMachine(
     {
         { CoffeeType::CAPPUCCINO, &cappuccino }
