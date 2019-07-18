@@ -302,6 +302,22 @@ public:
         }
     }
 };
+
+class Marochino : public IRecipe
+{
+public:
+    Marochino(CupSize size, ISourceOfIngredients* src)
+        : IRecipe(size, src)
+    {
+    }
+    void make()
+    {
+        for(auto i : m_ingredients) {
+            i->get();
+        }
+    }
+};
+
 // 1. Temperature.get(0) -> getTemperature(0)
 
 TEST(CoffeeMachine, TemperatureGet0CallsGetTemperature0)
@@ -458,6 +474,16 @@ TEST(CoffeeMachine, LatteBigCup)
 }
 
 // 15. Marochino.make(CupSize.SMALL) -> getChocolate(25), getCoffee(25), getMilkFoam(25)
+
+TEST(CoffeeMachine, MarochinoSmallCup)
+{
+    SourceOfIngredientsMock src;
+    Marochino marochino(CupSize::SMALL, &src);
+    EXPECT_CALL(src, getChocolate(25)).Times(AtLeast(1));
+    EXPECT_CALL(src, getCoffee(25)).Times(AtLeast(1));
+    EXPECT_CALL(src, getMilkFoam(25)).Times(AtLeast(1));
+    marochino.make();
+}
 
 // 16. Marochino.make(CupSize.BIG) -> getChocolate(35), getCoffee(35), getMilkFoam(35)
 
