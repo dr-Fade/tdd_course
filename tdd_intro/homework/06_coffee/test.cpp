@@ -139,6 +139,17 @@ public:
     }
 };
 
+class Milk : public Ingredient
+{
+public:
+    Milk(ISourceOfIngredients* src, int gram)
+        : Ingredient(src, gram) {}
+    void get()
+    {
+        m_src->getMilk(m_val);
+    }
+};
+
 // 1. Temperature.get(0) -> getTemperature(0)
 
 TEST(CoffeeMachine, TemperatureGet0CallsGetTemperature0)
@@ -177,4 +188,14 @@ TEST(CoffeeMachine, CoffeeGet0CallsGetCoffee0)
     Coffee coffee(&src, 0);
     EXPECT_CALL(src, getCoffee(0)).Times(AtLeast(1));
     coffee.get();
+}
+
+// 5. Milk(0) -> Milk.get() -> getMilk(0)
+
+TEST(CoffeeMachine, MilkGet0CallsGetMilk0)
+{
+    SourceOfIngredientsMock src;
+    Milk milk(&src, 0);
+    EXPECT_CALL(src, getMilk(0)).Times(AtLeast(1));
+    milk.get();
 }
