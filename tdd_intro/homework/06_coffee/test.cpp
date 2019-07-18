@@ -496,6 +496,16 @@ TEST(CoffeeMachine, MarochinoSmallCup)
 
 // 16. Marochino.make(CupSize.BIG) -> getChocolate(35), getCoffee(35), getMilkFoam(35)
 
+TEST(CoffeeMachine, MarochinoBigCup)
+{
+    SourceOfIngredientsMock src;
+    Marochino marochino(CupSize::BIG, &src);
+    EXPECT_CALL(src, getChocolate(35)).Times(AtLeast(1));
+    EXPECT_CALL(src, getCoffee(35)).Times(AtLeast(1));
+    EXPECT_CALL(src, getMilkFoam(35)).Times(AtLeast(1));
+    marochino.make();
+}
+
 // 17. makeCoffee(CoffeeType.AMERICANO, CupSize.LITTLE) -> Americano.make(CupSize.SMALL)
 
 // 18. makeCoffee(CoffeeType.AMERICANO, CupSize.BIG) -> Americano.make(CupSize.BIG)
