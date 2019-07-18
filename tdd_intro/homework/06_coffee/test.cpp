@@ -367,13 +367,26 @@ TEST(CoffeeMachine, AmericanoMakeBigCup)
 
 // 11. Cappuccino.make(CupSize.SMALL) -> getMilk(33), getCoffee(33), getMilkFoam(33), getTemperature(80)
 
-TEST(CoffeeMachine, CappuccinoSmallVup)
+TEST(CoffeeMachine, CappuccinoSmallCup)
 {
     SourceOfIngredientsMock src;
     Cappuccino cappuccino(CupSize::SMALL, &src);
     EXPECT_CALL(src, getMilk(33)).Times(AtLeast(1));
     EXPECT_CALL(src, getCoffee(33)).Times(AtLeast(1));
     EXPECT_CALL(src, getMilkFoam(33)).Times(AtLeast(1));
+    EXPECT_CALL(src, getTemperature(80)).Times(AtLeast(1));
+    cappuccino.make();
+}
+
+// 12. Cappuccino.make(CupSize.BIG) -> getMilk(46), getCoffee(46), getMilkFoam(46), getTemperature(80)
+
+TEST(CoffeeMachine, CappuccinoBigCup)
+{
+    SourceOfIngredientsMock src;
+    Cappuccino cappuccino(CupSize::BIG, &src);
+    EXPECT_CALL(src, getMilk(46)).Times(AtLeast(1));
+    EXPECT_CALL(src, getCoffee(46)).Times(AtLeast(1));
+    EXPECT_CALL(src, getMilkFoam(46)).Times(AtLeast(1));
     EXPECT_CALL(src, getTemperature(80)).Times(AtLeast(1));
     cappuccino.make();
 }
