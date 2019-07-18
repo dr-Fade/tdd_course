@@ -436,14 +436,34 @@ TEST(CoffeeMachine, LatteSmallCup)
 }
 
 // 14. Latte.make(CupSize.BIG) -> getMilk(35), getCoffee(70), getMilkFoam(35), getTemperature(90)
+
+TEST(CoffeeMachine, LatteBigCup)
+{
+    SourceOfIngredientsMock src;
+    Latte latte(CupSize::BIG, &src);
+    EXPECT_CALL(src, getMilk(35)).Times(AtLeast(1));
+    EXPECT_CALL(src, getCoffee(70)).Times(AtLeast(1));
+    EXPECT_CALL(src, getMilkFoam(35)).Times(AtLeast(1));
+    EXPECT_CALL(src, getTemperature(90)).Times(AtLeast(1));
+    latte.make();
+}
+
 // 15. Marochino.make(CupSize.SMALL) -> getChocolate(25), getCoffee(25), getMilkFoam(25)
+
 // 16. Marochino.make(CupSize.BIG) -> getChocolate(35), getCoffee(35), getMilkFoam(35)
 
 // 17. makeCoffee(CoffeeType.AMERICANO, CupSize.LITTLE) -> Americano.make(CupSize.SMALL)
+
 // 18. makeCoffee(CoffeeType.AMERICANO, CupSize.BIG) -> Americano.make(CupSize.BIG)
+
 // 19. makeCoffee(CoffeeType.CAPPUCCINO, CupSize.LITTLE) -> Cappuccino.make(CupSize.SMALL))
+
 // 20. makeCoffee(CoffeeType.CAPPUCCINO, CupSize.BIG) -> Cappuccino.make(CupSize.BIG)
+
 // 21. makeCoffee(CoffeeType.LATTE, CupSize.LITTLE) -> Latte.make(CupSize.SMALL)
+
 // 22. makeCoffee(CoffeeType.LATTE, CupSize.BIG) -> Latte.make(CupSize.BIG)
+
 // 23. makeCoffee(CoffeeType.MAROCHINO, CupSize.LITTLE) -> Marochino.make(CupSize.SMALL)
+
 // 24. makeCoffee(CoffeeType.MAROCHINO, CupSize.BIG) -> Marochino.make(CupSize.BIG)
