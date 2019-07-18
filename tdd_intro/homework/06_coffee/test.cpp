@@ -106,6 +106,17 @@ public:
     }
 };
 
+class Water : public Ingredient
+{
+public:
+    Water(ISourceOfIngredients* src, int gram)
+        : Ingredient(src, gram) {}
+    void get()
+    {
+        m_src->getWater(m_val);
+    }
+};
+
 // 1. Temperature.get(0) -> getTemperature(0)
 
 TEST(CoffeeMachine, TemperatureGet0CallsGetTemperature0)
@@ -116,3 +127,12 @@ TEST(CoffeeMachine, TemperatureGet0CallsGetTemperature0)
     temp.get();
 }
 
+// 2. Water(0) -> Water.get() -> getWater(0)
+
+TEST(CoffeeMachine, WaterGet0CallsGetWater0)
+{
+    SourceOfIngredientsMock src;
+    Water water(&src, 0);
+    EXPECT_CALL(src, getWater(0)).Times(AtLeast(1));
+    water.get();
+}
