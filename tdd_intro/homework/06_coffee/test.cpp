@@ -53,6 +53,7 @@ Implement worked coffee machine using ISourceOfIngredients to controll the proce
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
+using testing::AtLeast;
 
 class ISourceOfIngredients
 {
@@ -67,3 +68,46 @@ public:
     virtual void getChocolate(int gram) = 0;
     virtual void getCream(int gram) = 0;
 };
+
+class SourceOfIngredientsMock : public ISourceOfIngredients
+{
+public:
+    MOCK_METHOD1(getTemperature, void(int degrees));
+    MOCK_METHOD1(getWater, void(int gram));
+    MOCK_METHOD1(getSugar, void(int gram));
+    MOCK_METHOD1(getCoffee, void(int gram));
+    MOCK_METHOD1(getMilk, void(int gram));
+    MOCK_METHOD1(getMilkFoam, void(int gram));
+    MOCK_METHOD1(getChocolate, void(int gram));
+    MOCK_METHOD1(getCream, void(int gram));
+};
+
+class Ingredient
+{
+public:
+    Ingredient(ISourceOfIngredients* src, int val)
+        : m_src(src)
+    {}
+    virtual void get() = 0;
+private:
+    ISourceOfIngredients* m_src;
+};
+
+class Temperature : public Ingredient
+{
+public:
+    Temperature(ISourceOfIngredients* src, int degrees)
+        : Ingredient(src, degrees) {}
+    void get() {}
+};
+
+// 1. Temperature.get(0) -> getTemperature(0)
+
+TEST(CoffeeMachine, TemperatureGet0CallsGetTemperature0)
+{
+    SourceOfIngredientsMock src;
+    Temperature temp(&src, 0);
+    EXPECT_CALL(src, getTemperature(0)).Times(AtLeast(1));
+    temp.get();
+}
+
