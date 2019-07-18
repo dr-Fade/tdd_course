@@ -556,6 +556,18 @@ TEST(CoffeeMachine, makeSmallCupOfAmericano)
 
 // 18. makeCoffee(CoffeeType.AMERICANO, CupSize.BIG) -> Americano.make(CupSize.BIG)
 
+TEST(CoffeeMachine, makeBigCupOfAmericano)
+{
+    MockAmericano americano;
+    CoffeeMachine coffeeMachine(
+    {
+        { CoffeeType::AMERICANO, &americano }
+    }
+    );
+    EXPECT_CALL(americano, make(CupSize::BIG)).Times(AtLeast(1));
+    coffeeMachine.makeCoffee(CoffeeType::AMERICANO, CupSize::BIG);
+}
+
 // 19. makeCoffee(CoffeeType.CAPPUCCINO, CupSize.LITTLE) -> Cappuccino.make(CupSize.SMALL))
 
 // 20. makeCoffee(CoffeeType.CAPPUCCINO, CupSize.BIG) -> Cappuccino.make(CupSize.BIG)
