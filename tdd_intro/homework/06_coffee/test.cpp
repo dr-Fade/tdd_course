@@ -161,7 +161,6 @@ public:
     }
 };
 
-
 class Chocolate : public Ingredient
 {
 public:
@@ -170,6 +169,17 @@ public:
     void get()
     {
         m_src->getChocolate(m_val);
+    }
+};
+
+class Cream : public Ingredient
+{
+public:
+    Cream(ISourceOfIngredients* src, int gram)
+        : Ingredient(src, gram) {}
+    void get()
+    {
+        m_src->getCream(m_val);
     }
 };
 
@@ -241,4 +251,14 @@ TEST(CoffeeMachine, ChocolateGet0CallsGetChocolate0)
     Chocolate chocolate(&src, 0);
     EXPECT_CALL(src, getChocolate(0)).Times(AtLeast(1));
     chocolate.get();
+}
+
+// 8. Cream(0) -> Cream.get() -> ISourceOfIngredients.getCream(0)
+
+TEST(CoffeeMachine, CreamGet0CallsGetCream0)
+{
+    SourceOfIngredientsMock src;
+    Cream cream(&src, 0);
+    EXPECT_CALL(src, getCream(0)).Times(AtLeast(1));
+    cream.get();
 }
