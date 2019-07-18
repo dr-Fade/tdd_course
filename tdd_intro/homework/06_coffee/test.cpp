@@ -239,6 +239,15 @@ public:
     }
 };
 
+class MockAmericano: public Americano
+{
+public:
+    MockAmericano()
+        : Americano(nullptr)
+    {}
+    MOCK_METHOD1(makeCoffee, void(CupSize size));
+};
+
 class Cappuccino : public IRecipe
 {
 public:
@@ -331,6 +340,18 @@ public:
             i->get();
         }
     }
+};
+
+enum CoffeeType
+{
+    AMERICANO, CAPPUCCINO, LATTE, MAROCHINO
+};
+
+class CoffeeMachine
+{
+public:
+    CoffeeMachine(std::map<CoffeeType, IRecipe*> recipes) {}
+    void makeCoffee(CoffeeType type, CupSize size) {}
 };
 
 // 1. Temperature.get(0) -> getTemperature(0)
@@ -513,6 +534,18 @@ TEST(CoffeeMachine, MarochinoBigCup)
 }
 
 // 17. makeCoffee(CoffeeType.AMERICANO, CupSize.LITTLE) -> Americano.make(CupSize.SMALL)
+
+TEST(CoffeeMachine, makeSmallCupOfAmericano)
+{
+    MockAmericano americano;
+    CoffeeMachine coffeeMachine(
+    {
+        { CoffeeType::AMERICANO, &americano }
+    }
+    );
+    EXPECT_CALL(americano, makeCoffee(CupSize::SMALL)).Times(AtLeast(1));
+    coffeeMachine.makeCoffee(CoffeeType::AMERICANO, CupSize::SMALL);
+}
 
 // 18. makeCoffee(CoffeeType.AMERICANO, CupSize.BIG) -> Americano.make(CupSize.BIG)
 
